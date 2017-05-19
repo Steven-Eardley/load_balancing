@@ -1,0 +1,15 @@
+version: '3'
+  services:
+    web:
+      restart: always
+      build: .
+      command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
+      volumes:
+        - .:/code
+      expose:
+        - 80
+      depends_on:
+        - db
+      deploy:
+        mode: replicated
+        replicas: 4

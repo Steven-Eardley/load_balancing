@@ -1,15 +1,35 @@
 version: '3'
 services:
-  web:
+  web1:
     restart: always
-    build: .
-    command: uwsgi --http-socket localhost:8080 --manage-script-name --mount /web=app:app --plugin python3
+    build: ./app
+    command: uwsgi --http-socket 0.0.0.0:80 --manage-script-name --mount /web=app:app
     volumes:
-      - .:/app
-    #expose:
-    #  - 80
+      - ./app:/app
+    expose:
+      - 80
+  web2:
+    restart: always
+    build: ./app
+    command: uwsgi --http-socket 0.0.0.0:80 --manage-script-name --mount /web=app:app
+    volumes:
+      - ./app:/app
+    expose:
+      - 80
+  web3:
+    restart: always
+    build: ./app
+    command: uwsgi --http-socket 0.0.0.0:80 --manage-script-name --mount /web=app:app
+    volumes:
+      - ./app:/app
+    expose:
+      - 80
+  proxy:
+    restart: "no"
+    build: ./proxy
+    links:
+      - web1
+      - web2
+      - web3
     ports:
-      - "8080:8080"
-    deploy:
-      mode: replicated
-      replicas: 1
+      - "8080:80"

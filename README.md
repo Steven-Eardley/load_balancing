@@ -1,4 +1,15 @@
 ## load_balancing
 
-Run app with:
-```uwsgi --http-socket localhost:8080 --manage-script-name --mount /web=app:app --virtualenv ~/code/cl/load_balancing --plugin python3```
+**Experiments with load balancing a flask app using *nginx* or *haproxy***
+
+### Run nginx version:
+
+    todo
+
+### Run haproxy version:
+
+From project root, for 3 web-servers:
+
+    docker-compose -f docker-compose-haproxy.yml scale web=3
+    docker-compose -f docker-compose-haproxy.yml up
+

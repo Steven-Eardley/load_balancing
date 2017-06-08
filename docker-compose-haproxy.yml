@@ -1,0 +1,19 @@
+version: '3'
+services:
+  web:
+    restart: always
+    build: ./app
+    command: uwsgi --http-socket 0.0.0.0:80 --manage-script-name --mount /web=app:app
+    volumes:
+      - ./app:/app
+    expose:
+      - 80
+
+  proxy:
+    image: 'dockercloud/haproxy:latest'
+    links:
+      - web
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "8080:80"

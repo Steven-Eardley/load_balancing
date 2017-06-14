@@ -28,3 +28,9 @@ I find (Docker for Mac 17.03.1-ce, compose 1.11.2) simply re-running ```docker-c
 doesn't reduce the count on the next ```docker-compose up```, you must first run ```docker-compose down```, re-scale,
 then back ```up``` to get the reduction.
 
+#### Testing the load balancers
+
+Initially, running the bash command below will demonstate round-robin behaviour by the load balancers. The hostname will
+change as the hit counter increments.
+
+    for i in {1..10}; do time curl localhost:8080; done;

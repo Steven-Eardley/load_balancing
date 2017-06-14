@@ -14,10 +14,24 @@ services:
     links:
       - redis
 
+  brokenworld:
+    restart: always
+    build: ./app
+    command: uwsgi --http-socket 0.0.0.0:80 --manage-script-name --mount /web=app:app
+    volumes:
+      - ./app:/app
+    expose:
+      - 80
+    links:
+      - redis
+    environment:
+      - SLOW_APP=1
+
   proxy:
     image: 'dockercloud/haproxy:latest'
     links:
       - hiworld
+      - brokenworld
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:

@@ -27,12 +27,11 @@ services:
     environment:
       - SLOW_APP=1
 
-  proxy:
-    image: 'dockercloud/haproxy:latest'
+  proxy-custom:
+    restart: "no"
+    build: ./proxy
     links:
       - hiworld
       - brokenworld
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "8080:80"

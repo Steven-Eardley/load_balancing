@@ -6,21 +6,27 @@
 
     todo
 
-### Run haproxy version:
+### Run haproxy preconfigured version:
 
 From project root, for 3 web-servers:
 
-    docker-compose -f docker-compose-haproxy.yml up             # Builds initial containers and creates network
-    docker-compose -f docker-compose-haproxy.yml scale web=3    # Creates 3 web apps
-    docker-compose -f docker-compose-haproxy.yml up             # Run the whole service
+    docker-compose -f compose-haproxy-preconf.yml up             # Builds initial containers and creates network
+    docker-compose -f compose-haproxy-preconf.yml scale web=3    # Creates 3 web apps
+    docker-compose -f compose-haproxy-preconf.yml up             # Run the whole service
     
 Connect to port ```localhost:8080``` to see the load balancing effect.
+
+### Run haproxy custom version
+
+Useful for playing with haproxy config file parameters.
+
+    docker-compose -f compose-haproxy-custom.yml up             # Builds initial containers and creates network
 
 #### Optional - give it a better name
 Because the project directory is called ```src```, you'll get containers named like ```src_redis_1```. If you want a
 better name, add the argument ```-p, --project-name``` to ```docker-compose```:
 
-    docker-compose -f docker-compose-haproxy.yml -p hi-hiproxy up
+    docker-compose -f compose-haproxy-preconf.yml -p hi-hiproxy up
 
 #### To scale down
 

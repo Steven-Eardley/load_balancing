@@ -27,9 +27,9 @@ services:
     environment:
       - SLOW_APP=1
 
-  proxy-custom:
+  nginx:
     restart: "no"
-    build: ./haproxy
+    build: ./nginx
     links:
       - hiworld
       - brokenworld

@@ -16,7 +16,7 @@ slow_count = 0
 def index():
     if bool(os.getenv('SLOW_APP', False)):
         global slow_count
-        rnd = seq[slow_count % len(seq)]                                                # treat sequence as circular
+        rnd = seq[slow_count % len(seq)]                                                    # treat sequence as circular
         print('Sleeping for {0} seconds before replying.'.format(rnd))
         time.sleep(rnd)
         slow_count += 1

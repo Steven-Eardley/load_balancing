@@ -10,9 +10,7 @@
 
 From project root, for 3 web-servers:
 
-    docker-compose -f compose-haproxy-preconf.yml up             # Builds initial containers and creates network
-    docker-compose -f compose-haproxy-preconf.yml scale web=3    # Creates 3 web apps
-    docker-compose -f compose-haproxy-preconf.yml up             # Run the whole service
+    docker-compose -f compose-haproxy-preconf.yml up --scale hiworld=3
     
 Connect to port ```localhost:8080``` to see the load balancing effect.
 

@@ -6,8 +6,8 @@ import socket, os, time
 r = Redis(host='redis')
 r.set('count', 0)
 
-# A sequence of 35 random numbers which will stay the same between tests (random.seed didn't work).
-seq = [1, 6, 8, 9, 2, 8, 6, 5, 3, 9, 10, 12, 9, 2, 7, 11, 7, 8, 3, 7, 4, 7, 1, 4, 3, 8, 1, 6, 12, 10, 7, 4, 11, 5, 10]
+# A sequence of random numbers which will stay the same between tests (random.seed didn't work).
+seq = [1, 6, 8, 9, 2, 10, 12, 11, 9, 2, 7, 11, 7, 8, 3]
 slow_count = 0
 
 

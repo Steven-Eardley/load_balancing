@@ -16,9 +16,9 @@ while [[ ${count} -lt 100 ]]
         then
             echo "Local and remote sequence counts differ: local $count, remote $respcount";
             status=1;
-            break;
+            #break;
         fi
-        sleep .5s
+        #sleep .5s
     done
 
 exit ${status};

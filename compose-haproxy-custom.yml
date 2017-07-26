@@ -30,7 +30,7 @@ services:
   proxy-custom:
     restart: "no"
     build: ./haproxy
-    command: /sbin/syslogd -O /proc/1/fd/1 && haproxy -f /usr/local/etc/haproxy/haproxy.cfg -db
+    command: sh -c "/sbin/syslogd -O /proc/1/fd/1 && haproxy -f /usr/local/etc/haproxy/haproxy.cfg -db"
     links:
       - hiworld
       - brokenworld

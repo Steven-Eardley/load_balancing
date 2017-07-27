@@ -21,4 +21,18 @@ def index():
         time.sleep(rnd)
         slow_count += 1
     r.incr('count')
-    return "Hello, World! From {0}\nVisit count {1}\n".format(socket.gethostname(), int(r.get("count")))
+    return "Hello, World! From {0}\nVisit count {1}\n".format(socket.gethostname(), int(r.get("count"))), 200
+
+
+# Serve a health check response, which is delayed in sequence with the main route
+@app.route('/ping')
+def ping():
+    if bool(os.getenv('SLOW_APP', False)):
+        global slow_count
+        rnd = seq[slow_count % len(seq)]
+        if rnd % 2 == 1:
+            print('Simulating app error for health check')
+            return "", 500
+        else:
+            return "", 200
+    return "", 200

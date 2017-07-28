@@ -3,7 +3,18 @@ services:
   redis:
     image: redis:alpine
 
-  hiworld:
+  hiworld1:
+    restart: always
+    build: ./app
+    command: uwsgi --http-socket 0.0.0.0:80 --manage-script-name --mount /web=app:app
+    volumes:
+      - ./app:/app
+    expose:
+      - 80
+    links:
+      - redis
+
+  hiworld2:
     restart: always
     build: ./app
     command: uwsgi --http-socket 0.0.0.0:80 --manage-script-name --mount /web=app:app
@@ -32,7 +43,8 @@ services:
     build: ./haproxy
     command: sh -c "/sbin/syslogd -O /proc/1/fd/1 && haproxy -f /usr/local/etc/haproxy/haproxy.cfg -dbV"
     links:
-      - hiworld
+      - hiworld1
+      - hiworld2
       - brokenworld
     ports:
       - "8080:80"

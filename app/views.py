@@ -9,6 +9,7 @@ r.set('count', 0)
 # A sequence of random numbers which will stay the same between tests (random.seed didn't work).
 seq = [1, 6, 8, 9, 2, 10, 12, 11, 9, 2, 7, 11, 7, 8, 3]
 slow_count = 0
+ping_count = 0
 
 
 # Serve a page which shows the hostname and increments visit counter
@@ -28,11 +29,13 @@ def index():
 @app.route('/ping')
 def ping():
     if bool(os.getenv('SLOW_APP', False)):
-        global slow_count
-        rnd = seq[slow_count % len(seq)]
-        if rnd % 2 == 1:
+        global ping_count
+        ping_count += 1
+        if ping_count <= 5:
             print('Simulating app error for health check')
             return "", 500
         else:
+            if ping_count >= 15:
+                ping_count = 0
             return "", 200
     return "", 200

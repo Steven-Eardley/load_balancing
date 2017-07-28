@@ -1,15 +1,10 @@
 from app import app
-from redis import Redis
 import socket, os, time
 
-# Create a connection to redis
-r = Redis(host='redis')
-r.set('count', 0)
-
 # A sequence of random numbers which will stay the same between tests (random.seed didn't work).
-seq = [1, 6, 8, 9, 2, 10, 12, 11, 9, 2, 7, 11, 7, 8, 3]
+#seq = [1, 2, 3, 4, 6, 1, 1, 2, 7, 2, 7, 1, 7, 1, 10, 13]
+seq = [2, 6, 1, 6, 6, 6, 6]
 slow_count = 0
-ping_count = 0
 
 
 # Serve a page which shows the hostname and increments visit counter
@@ -21,21 +16,5 @@ def index():
         print('Sleeping for {0} seconds before replying.'.format(rnd))
         time.sleep(rnd)
         slow_count += 1
-    r.incr('count')
-    return "Hello, World! From {0}\nVisit count {1}\n".format(socket.gethostname(), int(r.get("count"))), 200
+    return "Hello, World! From {0}\n".format(socket.gethostname()), 200
 
-
-# Serve a health check response, which is delayed in sequence with the main route
-@app.route('/ping')
-def ping():
-    if bool(os.getenv('SLOW_APP', False)):
-        global ping_count
-        ping_count += 1
-        if ping_count <= 5:
-            print('Simulating app error for health check')
-            return "", 500
-        else:
-            if ping_count >= 15:
-                ping_count = 0
-            return "", 200
-    return "", 200

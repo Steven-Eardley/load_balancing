@@ -2,8 +2,7 @@ from app import app
 import socket, os, time
 
 # A sequence of random numbers which will stay the same between tests (random.seed didn't work).
-#seq = [1, 2, 3, 4, 6, 1, 1, 2, 7, 2, 7, 1, 7, 1, 10, 13]
-seq = [2, 6, 1, 6, 6, 6, 6]
+seq = [1, 2, 3, 4, 6, 1, 1, 2, 7, 2, 7, 1, 7, 1, 10, 13]
 slow_count = 0
 
 

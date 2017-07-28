@@ -1,29 +1,26 @@
 version: '3'
 services:
-  redis:
-    image: redis:alpine
 
-  hiworld:
+  hiworld1:
     restart: always
     build: ./app
     command: uwsgi --http-socket 0.0.0.0:80 --manage-script-name --mount /web=app:app
-    volumes:
-      - ./app:/app
     expose:
       - 80
-    links:
-      - redis
+
+  hiworld2:
+    restart: always
+    build: ./app
+    command: uwsgi --http-socket 0.0.0.0:80 --manage-script-name --mount /web=app:app
+    expose:
+      - 80
 
   brokenworld:
     restart: always
     build: ./app
     command: uwsgi --http-socket 0.0.0.0:80 --manage-script-name --mount /web=app:app
-    volumes:
-      - ./app:/app
     expose:
       - 80
-    links:
-      - redis
     environment:
       - SLOW_APP=1
 
@@ -31,7 +28,8 @@ services:
     restart: "no"
     build: ./nginx
     links:
-      - hiworld
+      - hiworld1
+      - hiworld2
       - brokenworld
     ports:
       - "8080:80"

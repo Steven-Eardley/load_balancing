@@ -1,8 +1,8 @@
 from app import app
 import socket, os, time
 
-# A sequence of random numbers which will stay the same between tests (random.seed didn't work).
-seq = [1, 2, 3, 4, 6, 1, 1, 2, 7, 2, 7, 1, 7, 1, 10, 13]
+# Our behaviour sequence for broken machines - 5 quick responses then 5 very slow ones
+seq = [1] * 5 + [20] * 5
 slow_count = 0
 
 
@@ -15,5 +15,5 @@ def index():
         print('Sleeping for {0} seconds before replying.'.format(rnd))
         time.sleep(rnd)
         slow_count += 1
-    return "Hello, World! From {0}\n".format(socket.gethostname()), 200
+    return "Hello, World! From {0} ".format(socket.gethostname()), 200
 

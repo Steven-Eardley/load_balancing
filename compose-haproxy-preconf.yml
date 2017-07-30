@@ -7,8 +7,6 @@ services:
     restart: always
     build: ./app
     command: uwsgi --http-socket 0.0.0.0:80 --manage-script-name --mount /web=app:app
-    volumes:
-      - ./app:/app
     expose:
       - 80
     links:
@@ -18,8 +16,6 @@ services:
     restart: always
     build: ./app
     command: uwsgi --http-socket 0.0.0.0:80 --manage-script-name --mount /web=app:app
-    volumes:
-      - ./app:/app
     expose:
       - 80
     links:

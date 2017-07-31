@@ -2,7 +2,7 @@ from app import app
 import socket, os, time
 
 # Our behaviour sequence for broken machines - 5 quick responses then 5 very slow ones
-seq = [1] * 5 + [20] * 5
+seq = [1] * 5 + [20] * 5 + [1] * 5
 slow_count = 0
 
 

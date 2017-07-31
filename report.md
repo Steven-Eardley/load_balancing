@@ -105,15 +105,19 @@ Of course, without any explicit health checks (a feature of
 of money) that's all nginx can do - it infers by the performance that a proxied
 machine is down or slow, gives is a break, and tries again later. The only 
 communication is has are the actual user requests, so that's what it sends to
-determine whether a machine is up or not. The timeout delays are a necessary 
-effect of this approach.
+determine whether a machine is responsive or not. Even when a machine
+is completely off, nginx will periodically send traffic until the timeout in order
+to determine when the server can be reinstated. Therefore the timeout delays are a 
+necessary outcome of this approach.
 
 This means that when using nginx as a load balancer, the ```proxy_read_timeout```
 setting should be as low as possible (as with all timeouts, really). However, 
-because in the DOAJ we are proxying ElasticSearch servers, we had it set fairly
-high to allow for how long a particularly tricky query may take. 
-
-### \#fixme: how to express what's really killing the app - busy gunicorn workers?
+because in the DOAJ we are proxying an app which accepts file uploads as well as 
+ElasticSearch servers, we had it set very high - 10 minutes. ElasticSearch issues
+were causing the gunicorn workers to hang, then the app failed. 
+This has now been altered - a more sensible  ```proxy_read_timeout``` has been
+set for the index machines so we don't wait 10 minutes for a query to finish when
+ES is being unresponsive.
 
 ### HAPROXY
 

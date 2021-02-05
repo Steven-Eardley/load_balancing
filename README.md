@@ -38,3 +38,8 @@ Initially, running the bash command below will demonstate round-robin behaviour 
 change as the hit counter increments.
 
     for i in {1..10}; do time curl localhost:8080; done;
+
+#### todo cookie test
+
+for i in {1..10}; do time curl -i localhost:8080 -H "x-ping: whassup"; done;
+

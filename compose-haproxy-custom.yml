@@ -13,6 +13,8 @@ services:
       - 80
     links:
       - redis
+    depends_on:
+      - redis
 
   brokenworld:
     restart: always
@@ -26,6 +28,8 @@ services:
       - redis
     environment:
       - SLOW_APP=1
+    depends_on:
+      - redis
 
   proxy-custom:
     restart: "no"
@@ -36,3 +40,6 @@ services:
       - brokenworld
     ports:
       - "8080:80"
+    depends_on:
+      - hiworld
+      - brokenworld
